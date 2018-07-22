@@ -3,9 +3,9 @@ library(loadflex)
 
 test_check('loadflex', filter='01')
 test_check('loadflex', filter='02')
-# test_check('loadflex', filter='03') # breaks
-# test_check('loadflex', filter='04') # takes forever & has interaction
-# test_check('loadflex', filter='05') # segfault on travis (not appveyor or local)
+test_check('loadflex', filter='03') # slow but fine
+test_check('loadflex', filter='04') # could use some more tests
+# test_check('loadflex', filter='05') # segfault on travis
 # test_check('loadflex', filter='06') # just a shell of a test now
 test_check('loadflex', filter='11')
 test_check('loadflex', filter='21')
@@ -21,4 +21,4 @@ test_check('loadflex', filter='41')
 test_check('loadflex', filter='44')
 test_check('loadflex', filter='51')
 
-# test_check('loadflex', filter='01|02|05|06|11|21|22|23|31|32|33|41|42')
+# devtools::test(filter='01|02|05|06|11|21|22|23|31|32|33|41|42')

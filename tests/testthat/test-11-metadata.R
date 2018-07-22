@@ -1,3 +1,5 @@
+context("11-metadata")
+
 tryCatch({source("tests/testthat/helpers.R"); source("helpers.R")}, warning=function(w) invisible())
 
 test_that("metadata can be initialized", {

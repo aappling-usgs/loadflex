@@ -1,4 +1,4 @@
-context("match.arg.loadflex")
+context("01-match.arg.loadflex")
 
 tryCatch({source("tests/testthat/helpers.R"); source("helpers.R")}, warning=function(w) invisible())
 

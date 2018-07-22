@@ -1,24 +1,25 @@
+context("05-diagnostics")
+
 tryCatch({source("tests/testthat/helpers.R"); source("helpers.R")}, warning=function(w) invisible())
 
 test_that("isTimestepRegular works", {
-  library(rloadest)
+
+    library(rloadest)
   simpledata <- app2.calib[-which(diff(app2.calib$DATES) < 7),]
   
   # Error handling should be up to the caller
   expect_error(isTimestepRegular(simpledata$DATES, hist=FALSE, handler=stop), "Time series is irregular")
   expect_warning(isTimestepRegular(simpledata$DATES, hist=FALSE, handler=warning), "Time series is irregular")
   expect_false(isTimestepRegular(simpledata$DATES, hist=FALSE, handler=function(e) {}))
-  expect_false(isTimestepRegular(simpledata$DATES, hist=TRUE, handler=function(e) {}))
-  expect_manual_OK("Histogram of timesteps makes sense")
   
   # Regular time steps should pass
   simpledata <- transform(simpledata, DATES=seq(DATES[1], DATES[length(DATES)], length.out=length(DATES)))
-  expect_true(isTimestepRegular(simpledata$DATES, hist=TRUE, handler=function(e) {}))
+  expect_true(isTimestepRegular(simpledata$DATES, hist=FALSE, handler=function(e) {}))
   
   # Tolerance should be settable
   simpledata <- transform(simpledata, DATES=DATES + pmin(pmax(rnorm(length(DATES), 0, 0.1), -0.5), 0.5))
-  expect_false(isTimestepRegular(simpledata$DATES, hist=TRUE, handler=function(e) {}))
-  expect_true(isTimestepRegular(simpledata$DATES, hist=TRUE, tol = 1, handler=function(e) {}))
+  expect_false(isTimestepRegular(simpledata$DATES, hist=FALSE, handler=function(e) {}))
+  expect_true(isTimestepRegular(simpledata$DATES, hist=FALSE, tol = 1, handler=function(e) {}))
   
 })
 
@@ -33,7 +34,8 @@ test_that("Durbin Watson tests are reasonable", {
     flow = "FLOW", dates = "DATES", conc.units="mg/L"))
   
   # An irregular time step shouldn't work without some effort
-  expect_error(expect_warning(residDurbinWatson(reg.model), "Time series is irregular"), "invalid for an irregular time series")
+  expect_error(expect_warning(residDurbinWatson(reg.model, plot.acf=FALSE, irregular.timesteps.ok = FALSE), "Time series is irregular"), "invalid for an irregular time series")
+  expect_warning(residDurbinWatson(reg.model, plot.acf=FALSE), "Time series is irregular") # default: warning
   
   # But if you're willing to sacrifice regularity, you should be able to get a number
   expect_is(residDurbinWatson(reg.model, irregular.timesteps.ok=TRUE, plot=FALSE), "numeric")

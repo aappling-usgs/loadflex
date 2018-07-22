@@ -1,4 +1,4 @@
-context("text")
+context("02-text")
 
 tryCatch({source("tests/testthat/helpers.R"); source("helpers.R")}, warning=function(w) invisible())
 
@@ -9,7 +9,6 @@ test_that(".sentenceCase works", {
   expect_equal(loadflex:::.sentenceCase(c("QUICK brown Fox","LaZY doG")), c("Quick Brown Fox","Lazy Dog"))
 
 })
-
 
 test_that(".reSpace works", {
   

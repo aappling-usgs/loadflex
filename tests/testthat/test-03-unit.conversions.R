@@ -1,25 +1,25 @@
-context("unit.conversions")
+context("03-unit.conversions")
 
 tryCatch({source("tests/testthat/helpers.R"); source("helpers.R")}, warning=function(w) invisible())
 
 test_that("validMetadataUnits works", {
 
+  # unit.type = "ANY"
   expect_true(validMetadataUnits("mg L^-1"))
   expect_true(validMetadataUnits("ft^3 s^-1"))
   expect_true(validMetadataUnits("kg"))
-  expect_true(validMetadataUnits("colonies d^-1"))
-  expect_true(validMetadataUnits("kg d^-1"))
-  expect_true(validMetadataUnits("d^-1 kg"))
-  expect_true(validMetadataUnits("colonies s^-1"))
-  expect_true(validMetadataUnits("ug L^-1"))
-  expect_true(validMetadataUnits("mg ft^-3"))
-  expect_true(validMetadataUnits("g dL^-1"))
   
-  expect_false(validMetadataUnits("Mg^-2"))
   expect_false(validMetadataUnits("d"))
-  expect_false(validMetadataUnits("colonies sec^-1"))
   expect_false(validMetadataUnits("cfs"))
   expect_false(validMetadataUnits("cubic meters per second"))
+  
+  # specific unit.types=c("ANY","flow.units","conc.units","load.units","load.rate.units","basin.area.units")
+  expect_true(validMetadataUnits("kg d^-1", unit.type='load.rate.units'))
+  expect_false(validMetadataUnits("kg d^-1", unit.type='load.units'))
+  expect_true(validMetadataUnits("kg", unit.type='load.units'))
+  expect_true(validMetadataUnits("ha", unit.type='basin.area.units'))
+  expect_true(validMetadataUnits("mg L^-1", unit.type='conc.units'))
+  expect_false(validMetadataUnits("mg L^-1", unit.type='flow.units'))
   
 })
 
