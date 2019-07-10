@@ -13,8 +13,8 @@ getFittedModel(load.model)
 Object of class "function" which
 }
 \description{
-A function in the loadModelInterface. Takes a load.model and returns a 
-function to fit a new load.model that is identical in every respect except 
+A function in the loadModelInterface. Takes a load.model and returns a
+function to fit a new load.model that is identical in every respect except
 its training data and resulting model coefficients or other paramters. The
 returned function should accept exactly one argument, the training data, and
 should return an object of the same class as load.model.
@@ -30,3 +30,5 @@ Other loadModelInterface: \code{\link{estimateMSE}},
 
 Other getFittedModel: \code{\link{getFittedModel.loadModel}}
 }
+\concept{getFittedModel}
+\concept{loadModelInterface}

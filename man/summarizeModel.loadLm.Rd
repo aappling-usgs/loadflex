@@ -7,7 +7,7 @@
 \method{summarizeModel}{loadLm}(load.model, ...)
 }
 \arguments{
-\item{load.model}{A load model object, typically inheriting from loadModel 
+\item{load.model}{A load model object, typically inheriting from loadModel
 and always implementing the loadModelInterface.}
 
 \item{...}{Other arguments passed to model-specific methods}
@@ -57,3 +57,4 @@ Other summarizeModel: \code{\link{summarizeModel.loadComp}},
   \code{\link{summarizeModel.loadReg2}},
   \code{\link{summarizeModel}}
 }
+\concept{summarizeModel}

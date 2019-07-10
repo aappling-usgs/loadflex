@@ -15,7 +15,7 @@ Object of class "metadata" with slots reflecting the metadata for
   load.model
 }
 \description{
-A function in the loadModelInterface. Returns a load model's metadata, 
+A function in the loadModelInterface. Returns a load model's metadata,
 encapsulated as a \code{metadata} object.
 }
 \seealso{
@@ -31,3 +31,5 @@ Other loadModelInterface: \code{\link{estimateMSE}},
 Other getMetadata: \code{\link{getMetadata.loadModel}},
   \code{\link{getMetadata.loadReg}}
 }
+\concept{getMetadata}
+\concept{loadModelInterface}

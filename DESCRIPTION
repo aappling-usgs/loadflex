@@ -1,8 +1,8 @@
 Package: loadflex
 Type: Package
 Title: Models and Tools for Watershed Flux Estimates
-Version: 1.2.0
-Date: 2017-07-28
+Version: 1.9.1
+Date: 2019-04-12
 Authors@R: c(
     person("Alison P.", "Appling", , "aappling@usgs.gov", c("aut", "cre")),
     person("Miguel C.", "Leon", , , "aut"),
@@ -19,6 +19,7 @@ Description: Implements several of the most common methods for
     interface for any model type, with which you can quickly fit models,
     generate predictions, and aggregate to monthly or annual values.
 VignetteBuilder: knitr
+Encoding: UTF-8
 Depends:
     R(>= 3.0),
     methods,
@@ -70,4 +71,4 @@ Collate:
     'text.R'
     'uncertainty.R'
     'unit.conversions.R'
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1

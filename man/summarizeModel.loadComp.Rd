@@ -8,7 +8,7 @@
   irregular.timesteps.ok = NA, ...)
 }
 \arguments{
-\item{load.model}{A load model object, typically inheriting from loadModel 
+\item{load.model}{A load model object, typically inheriting from loadModel
 and always implementing the loadModelInterface.}
 
 \item{newdata}{data.frame of data that was/will be used to predict
@@ -64,3 +64,4 @@ Other summarizeModel: \code{\link{summarizeModel.loadInterp}},
   \code{\link{summarizeModel.loadReg2}},
   \code{\link{summarizeModel}}
 }
+\concept{summarizeModel}
