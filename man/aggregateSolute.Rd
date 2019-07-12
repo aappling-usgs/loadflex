@@ -6,13 +6,12 @@
 \usage{
 aggregateSolute(preds, metadata, format = c("conc", "flux rate"),
   agg.by = c("unit", "day", "month", "water year", "calendar year",
-  "total", "[custom]"), dates, custom = NA, na.rm = FALSE,
-  attach.units = FALSE, agg.cols = TRUE, count = TRUE, ...)
+  "total", "[custom]"), na.rm = FALSE, attach.units = FALSE,
+  agg.cols = TRUE, count = TRUE, ...)
 }
 \arguments{
-\item{preds}{Either a vector of predicted instantaneous fluxes or
-concentrations or a data.frame containing the columns "fit", "se.pred", and
-"date"}
+\item{preds}{A data.frame containing at least the columns "fit" (predicted
+instantaneous fluxes or concentrations) and "date". If agg.by includes}
 
 \item{metadata}{A metadata object describing the model}
 
@@ -26,20 +25,14 @@ attribute then no such checks can be made.}
 \item{agg.by}{character. The date interval or grouping column by which to
 aggregate. If agg.by="unit", values will be returned unaggregated but in
 the standard post-aggregation format. If agg.by is one of "day", "month",
-"water year", or "calendar year", the dates vector will be split into
+"water year", or "calendar year", the preds$date vector will be split into
 periods corresponding to those intervals, and the flux or concentration
-will be computed for each period. If agg.by="total", \code{dates} will be
-ignored and the entire vector \code{preds} will be aggregated. If
-agg.by="[custom]", aggregation will occur for each unique value in
-\code{dates}.}
-
-\item{dates}{A vector, of the same length as preds, containing the dates to
-aggregate over. This data may also be given as a column named "date" in
-preds when preds is a data.frame.}
-
-\item{custom}{An optional data.frame of one or more columns each containing
-factors or other labels on which to aggregate. The columns to be used are
-set by \code{agg.by}.}
+will be computed for each period. If agg.by="total", \code{preds$date} will
+be ignored and the entire vector \code{preds} will be aggregated. If agg.by
+contains custom names, those names are expected to be column names in
+\code{preds} and will be used to determine aggregation groups. If
+agg.by="unit", aggregation will occur for each unique value in
+\code{preds$dates}, i.e., no aggregation will occur.}
 
 \item{na.rm}{logical. Should NA values be ignored during aggregation (TRUE),
 or should NA be returned for intervals that contain one or more NA
@@ -96,13 +89,17 @@ data(eg_metadata)
 metadata_example <- updateMetadata(eg_metadata, dates="date")
 preds_example <- data.frame(fit=abs(rnorm(365, 5, 2)),
   date=seq(as.Date("2018-05-15"), as.Date("2019-05-14"), by=as.difftime(1, units="days")))
-aggregateSolute(preds_example, metadata=metadata_example, format="conc", agg.by="month")
+loadflex:::aggregateSolute(preds_example, metadata=metadata_example, format="conc", agg.by="month")
+loadflex:::aggregateSolute(preds_example, metadata=metadata_example, format="flux rate", agg.by="month")
+loadflex:::aggregateSolute(preds_example, metadata=metadata_example, format="flux rate", agg.by="month", attach.units=TRUE)
 
 # with a custom aggregation group
 preds_regrouped <- transform(preds_example, simple.season=ordered(
   c("winter","spring","summer","fall")[floor(((as.numeric(strftime(date, "\%m"))+0)\%\%12)/3)+1],
   c("winter","spring","summer","fall")))
-aggregateSolute(preds_example, metadata=metadata_example, format="conc",
-                agg.by="simple.season", custom=preds_regrouped)
+loadflex:::aggregateSolute(preds_example, metadata=metadata_example, format="conc",
+  agg.by="simple.season", custom=preds_regrouped)
+loadflex:::aggregateSolute(preds_example, metadata=metadata_example, format="flux",
+  agg.by="simple.season", custom=preds_regrouped)
 }
 }
