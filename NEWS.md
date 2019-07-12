@@ -1,3 +1,15 @@
+# 2.0.0
+
+* aggregateSolute is deprecated. Use agg.by option in predictSolute instead.
+
+* predictSolute labels the predictions as "conc" or "flux" rather than "fit".
+
+* "flux" predictions are always flux rates, not total fluxes, and are reported
+in the units specified for `load.rate.units` in the load model metadata.
+
+* Uncertainty estimates for aggregated concentrations or fluxes are only
+provided for loadReg2 models; aggregate values for other models are unavailable.
+
 # 1.1.0 - 1.1.20 or so
 
 * New function: `plotEGRET`. Generates plots of loadflex inputs and outputs 
