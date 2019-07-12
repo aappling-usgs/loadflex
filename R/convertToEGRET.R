@@ -175,8 +175,8 @@ convertToEGRETDaily <- function(newdata, load.model = NULL, meta = NULL) {
   # Prepare a data.frame of flow information
   daily_df <- expandFlowForEGRET(
     flowdat = newdata,
-    flow.colname = getInfo(meta, 'flow', TRUE),
-    date.colname = getInfo(meta, 'dates', TRUE),
+    flow.colname = loadflex::getInfo(meta, 'flow', TRUE),
+    date.colname = loadflex::getInfo(meta, 'dates', TRUE),
     flow.units = getUnits(meta, 'flow', 'EGRET'))
 
   # Return now if we can't add predictions
