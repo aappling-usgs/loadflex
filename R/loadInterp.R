@@ -423,7 +423,8 @@ predictSolute.loadInterp <- function(
 
   # Rename the `fit` column to describe the type of prediction
   if(is.data.frame(preds)) {
-    names(preds) <- replace(names(preds), names(preds)=='fit', flux.or.conc)
+    final_fit_col <- if(flux.or.conc == "flux" && agg.by != "unit") "flux.rate" else flux.or.conc
+    names(preds) <- replace(names(preds), names(preds)=='fit', final_fit_col)
   }
 
   return(preds)

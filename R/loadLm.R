@@ -317,12 +317,23 @@ predictSolute.loadLm <- function(
     preds <- preds$fit
   }
 
+  # Rename the `fit` column to describe the type of prediction
+  if(is.data.frame(preds)) {
+    final_fit_col <- if(flux.or.conc == "flux" && agg.by != "unit") "flux.rate" else flux.or.conc
+    names(preds) <- replace(names(preds), names(preds)=='fit', final_fit_col)
+  }
+
+  # Bring out units if hidden in a data.frame
+  if(attach.units && is.data.frame(preds)) {
+    preds <- u(preds)
+  }
+
   # use aggregate solute to aggregate to agg.by, but warn and return NA for uncertainty if it was requested
   if(agg.by != "unit") {
     preds <- aggregateSolute(preds, metadata = getMetadata(load.model), agg.by = agg.by,
                              format = flux.or.conc, dates = getCol(load.model@metadata, newdata, "date"))
     if(interval != "none" || se.fit || se.pred) {
-      warning("Uncertainty for aggregated predictions is currently unavailable for loadLm models")
+      warning("Uncertainty for aggregated predictions is currently unavailable for loadLm models; returning NAs")
     } else {
       preds <- preds %>% dplyr::select(-SE, -CI_lower, -CI_upper)
     }
