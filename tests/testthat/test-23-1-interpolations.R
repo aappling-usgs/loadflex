@@ -10,21 +10,21 @@ checkInterpPreds <- function(interp.fun) {
     constituent="conc", flow="discharge", load.rate="", dates="datetime",
     conc.units="mg/L", flow.units="cfs", load.units="kg", load.rate.units="kg/day",
     station="", custom=NULL)
-  
+
   # data for prediction (interpolation)
   mydat2 <- data.frame(datetime=strptime(paste0("2000-05-",rep(1:10, each=24)," ",rep(0:23, 10)),format="%Y-%m-%d %H"))
-  
+
   # Fit an interpolation model & make predictions
   lic <- loadInterp(interp.format="conc", data=mydat, interp.function=interp.fun, metadata=mymd)
   preds <- data.frame(mydat2, conc=predictSolute(lic, "conc", newdata=mydat2))
-  
+
   # Make and plot the predictions and the original data
-  #print(ggplot(preds, aes(x=datetime, y=conc)) + 
-  #        geom_point(color="pink") + geom_line(color="pink") + 
+  #print(ggplot(preds, aes(x=datetime, y=conc)) +
+  #        geom_point(color="pink") + geom_line(color="pink") +
   #        geom_point(data=mydat, shape=2, size=3, color="blue") + theme_bw())
-  
+
   # Get the tester's OK
-  expect_manual_OK(paste0(as.character(substitute(interp.fun))[1],"s (pink) look good with respect to observations (blue)"))
+  # expect_manual_OK(paste0(as.character(substitute(interp.fun))[1],"s (pink) look good with respect to observations (blue)"))
 }
 
 test_that("linearInterpolations look like they should", {
